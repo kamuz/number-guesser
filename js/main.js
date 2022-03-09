@@ -10,7 +10,7 @@ GAME FUNCTION:
 // Game value
 let min = 1,
 	max = 10,
-	winningNum = 2,
+	winningNum = getRandomNumber(min, max),
 	guessesLeft = 3;
 
 // UI Elements
@@ -81,4 +81,10 @@ function gameAction(won, end, msg){
 function setMessage(msg, color){
 	message.style.color = color;
 	message.textContent = msg;
+}
+
+// Get winning number
+function getRandomNumber(min, max){
+	// Range integer between min and max numbers
+	return Math.floor(Math.random() * (max - min + 1) ) + min;
 }
