@@ -1,5 +1,4 @@
 /*
-GAME FUNCTION:
 - Player must guess a number between a min and max
 - Player gets a central amount of guesses
 - Notify the player of guesses remaining
@@ -33,7 +32,7 @@ game.addEventListener('mousedown', function(e){
 });
 
 // Listen for guess
-guessBtn.addEventListener('click', function(e){
+guessBtn.addEventListener('click', function(){
 	let guess = parseInt(guessInput.value);
 
 	// Validate
