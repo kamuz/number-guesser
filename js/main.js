@@ -25,6 +25,13 @@ const message = document.querySelector('.message');
 minNum.textContent = min;
 maxNum.textContent = max;
 
+// Play again event listener
+game.addEventListener('mousedown', function(e){
+	if(e.target.className === 'play-again'){
+		window.location.reload();
+	}
+});
+
 // Listen for guess
 guessBtn.addEventListener('click', function(e){
 	let guess = parseInt(guessInput.value);
@@ -32,28 +39,28 @@ guessBtn.addEventListener('click', function(e){
 	// Validate
 	if(isNaN(guess) || guess < min || guess > max) {
 		setMessage(`Please enter a number between ${min} and ${max}`, 'red');
-	}
-
-	// Check if won
-	if(guess === winningNum) {
-		// Game over - win
-		gameAction(true, true,`${winningNum} is correct, YOU WIN!`)
 	} else {
-		// Wrong number
-		guessesLeft--;
-
-		if(guessesLeft === 0) {
-			// Game over - lost
-			gameAction(false, true, `Game Over, you lost. The correct number was ${winningNum}`);
+		// Check if won
+		if(guess === winningNum) {
+			// Game over - win
+			gameAction(true, true,`${winningNum} is correct, YOU WIN!`)
 		} else {
-			// Game continues - answer wrong
-			gameAction(false, false, `${guess} is not correct, ${guessesLeft} guesses left`);
+			// Wrong number
+			guessesLeft--;
+
+			if(guessesLeft === 0) {
+				// Game over - lost
+				gameAction(false, true, `Game Over, you lost. The correct number was ${winningNum}`);
+			} else {
+				// Game continues - answer wrong
+				gameAction(false, false, `${guess} is not correct, ${guessesLeft} guesses left`);
+			}
 		}
 	}
 });
 
 // Game over
-function gameAction(won, next, msg){
+function gameAction(won, end, msg){
 	let color;
 	won === true ? color = 'green' : color = 'red';
 	// Change border color
@@ -61,9 +68,13 @@ function gameAction(won, next, msg){
 	// Clear input
 	guessInput.value = '';
 	// Disable input
-	guessInput.disabled = next;
+	guessInput.disabled = end;
 	// Tell user its the wrong number
 	setMessage(msg, color);
+	// Change button value
+	end === true ? guessBtn.value = 'Play Again' : '';
+	// Add button class name
+	end === true ? guessBtn.className = 'play-again' : '';
 }
 
 // Set message
